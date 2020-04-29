@@ -3,7 +3,6 @@
 .env.local
 .env.local.php
 .env.*.local
-credentials.json
 token.json
 .idea/
 public/bundles/
