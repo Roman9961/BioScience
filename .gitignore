@@ -18,6 +18,7 @@ public/build/
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+.env*
 composer.phar
 ###> symfony/web-server-bundle ###
 .web-server-pid
