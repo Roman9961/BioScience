@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        <header>
+            <div class="container logo"></div>
+        </header>
+        <div  class="bg">
+            <div class="container">
+                {% block body %}{% endblock %}
+            </div>
+            <div class="d-flex justify-content-center">
+                <span class="text-justify mt-2 small">Please contact us at <a href="mailto:supp@moritzlab.com ">support@nugema.com </a> if you need help.</span>
+            </div>
+        </div>
+        <div class="container text-center">
+            <span>*We don't share your personal information with anyone. Valid for U.S. customers only.</span>
+        </div>
+
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

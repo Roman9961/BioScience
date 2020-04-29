@@ -1,0 +1,18 @@
+$pagination-color: #858796;
+$pagination-active-bg:  $pagination-color;
+$pagination-hover-color: $pagination-color;
+
+@import "~startbootstrap-sb-admin-2/scss/variables";
+@import "~startbootstrap-sb-admin-2/vendor/fontawesome-free/scss/fontawesome";
+@import "~startbootstrap-sb-admin-2/vendor/fontawesome-free/scss/brands";
+@import "~startbootstrap-sb-admin-2/vendor/fontawesome-free/scss/solid";
+@import "~bootstrap";
+@import "~startbootstrap-sb-admin-2/scss/sb-admin-2";
+@import "~bootstrap-table/src/bootstrap-table";
+@import "~bootstrap-daterangepicker/daterangepicker.css";
+@import "~bootstrap-table/dist/extensions/filter-control/bootstrap-table-filter-control.min.css";
+@import "~font-awesome";
+
+.checked {
+  color: orange;
+}

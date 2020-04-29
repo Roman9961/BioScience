@@ -1,0 +1,46 @@
+security:
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    encoders:
+        App\Entity\User:
+            algorithm: auto
+
+    providers:
+        user_provider:
+            entity:
+                class: App\Entity\User
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: true
+            form_login:
+                default_target_path: '/admin'
+            guard:
+                authenticators:
+                    - App\Security\PassAuthenticator
+                    - App\Security\GoogleAuthenticator
+                entry_point: App\Security\PassAuthenticator
+            remember_me:
+                secret:   '%kernel.secret%'
+                lifetime: 2592000 # 30 days in seconds
+                always_remember_me: true
+            logout:
+                path: /logout
+                target: /admin
+
+            # activate different ways to authenticate
+
+            # http_basic: true
+            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+
+            # form_login: true
+            # https://symfony.com/doc/current/security/form_login_setup.html
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        - { path: ^/(login|register|forgot-password|connect/google|connect/google/check), roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin, roles: [ROLE_ROOT,ROLE_SUPERVISOR, ROLE_ADMIN] }
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }

@@ -1,0 +1,170 @@
+$green:   #74bd54 !default;
+$yiq-contrasted-threshold:  180 !default;
+
+@import '~bootstrap/scss/bootstrap.scss';
+
+header {
+
+    .logo {
+        background: url('../images/logo.jpg') no-repeat center;
+        height: 90px;
+        background-size: contain;
+        margin-top: 25px;
+        margin-bottom: 25px;
+    }
+
+}
+
+
+.bg{
+    position: relative;
+    border-top: 3px solid #74bd54;
+    border-bottom: 3px solid #74bd54;
+    padding: 25px;
+    &::after {
+        content: "";
+        background: url('../images/bg.jpg') no-repeat center;
+        background-size: cover;
+        opacity: 0.1;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        position: absolute;
+        z-index: -1;
+    }
+}
+
+.formik-container{
+    background-color: white;
+    border: 1px solid #cecece;
+}
+
+.formik-input{
+    background-color: darken(white, 3%) !important;
+    div[class*="-control"]{
+        background-color: darken(white, 3%) !important;
+    }
+}
+.smaller{
+    font-size: 1.47rem;
+}
+.info{
+    font-size: 16px;
+    text-align-last: justify;
+}
+
+.form-step-1{
+    max-width: 340px;
+    padding: 20px;
+}
+
+.form-step-2{
+    padding: 20px;
+    input[type="radio"] {
+        -webkit-appearance: none;
+        width: 30px;
+        height: 30px;
+        border: none;
+        cursor: pointer;
+        transition: border .2s ease;
+        filter: grayscale(100%);
+        margin: 0 5px;
+        transition: all .2s ease;
+
+
+
+        &:focus {
+            outline: 0;
+        }
+        &:hover, &:checked {
+            background-size: cover !important;
+        }
+        &.happy {
+            background: url('../images/smiley-4.svg') center;
+            background-size: cover;
+            &:hover, &:checked {
+                filter: invert(62%) sepia(76%) saturate(318%) hue-rotate(57deg) brightness(130%) contrast(86%);
+            }
+        }
+        &.very-happy {
+            background: url('../images/smiley-5.svg') center;
+            background-size: cover;
+
+            &:hover, &:checked {
+                filter: invert(49%) sepia(17%) saturate(1868%) hue-rotate(81deg) brightness(103%) contrast(87%);
+
+            }
+        }
+
+        &.neutral {
+            background: url('../images/smiley-3.svg') center;
+            background-size: cover;
+            &:hover, &:checked {
+                filter: invert(24%) sepia(82%) saturate(2582%) hue-rotate(2deg) brightness(103%) contrast(105%);
+
+            }
+        }
+        &.very-sad {
+            background: url('../images/smiley-1.svg') center;
+            background-size: cover;
+            &:hover, &:checked {
+                filter: invert(72%) sepia(69%) saturate(1013%) hue-rotate(351deg) brightness(103%) contrast(105%);
+            }
+        }
+        &.sad {
+            background: url('../images/smiley-2.svg') center;
+            background-size: cover;
+            &:hover, &:checked {
+                filter: invert(59%) sepia(31%) saturate(5142%) hue-rotate(359deg) brightness(100%) contrast(107%);
+            }
+        }
+    }
+}
+
+.form-step-3{
+    padding: 20px 60px;
+}
+
+.form-step-5{
+    padding: 40px 20px;
+    max-width: 500px;
+}
+
+.form-progress-bar {
+    border: 1px solid #cecece;
+    background-color: #f7f7f7 ;
+    .form-progress {
+        display: flex;
+        justify-content: center;
+        color: white;
+        font-size: 12px;
+        background-color: #74bd54;
+        &-w40{
+            width: 40%;
+        }
+        &-w60{
+            width: 60%;
+        }
+        &-w80{
+            width: 80%;
+        }
+    }
+}
+
+.popover{
+  .arrow{
+    display: none;
+  }
+}
+
+.amazon-logo{
+  content: '';
+  background: url('../images/amazon_logo.png') center no-repeat;
+  background-size: contain;
+  height: 100%;
+}
+
+.review{
+  height: 100px !important;
+}
