@@ -161,7 +161,8 @@ class DefaultController  extends AbstractController
         }
 
         try {
-            $body = $customer->getFirstName().' '. $customer->getLastName().' make order'.PHP_EOL;
+            $body = $customer->getFirstName().' '. $customer->getLastName().' make order.'.PHP_EOL;
+            $body .= 'Go to '.$request->getHost().'/admin for additional information.';
             $mess = new \Swift_Message('New order #'.$customer->getOrderId() , $body);
             $mess->addTo('support@nugema.com');
             $mess->addFrom('naturalbioscience.promo@gmail.com');
