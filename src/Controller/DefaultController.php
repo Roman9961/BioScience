@@ -163,8 +163,8 @@ class DefaultController  extends AbstractController
         try {
             $body = $customer->getFirstName().' '. $customer->getLastName().' make order'.PHP_EOL;
             $mess = new \Swift_Message('New order #'.$customer->getOrderId() , $body);
-            $mess->addTo('lg@moritzlab.com');
-            $mess->addFrom('moritz.promo@gmail.com');
+            $mess->addTo('support@nugema.com');
+            $mess->addFrom('naturalbioscience.promo@gmail.com');
 
             $this->mailer->send($mess);
         } catch (\Exception $e) {
