@@ -79,19 +79,19 @@ document.addEventListener("DOMContentLoaded", ()=>{
                  <b>Customer:</b> ${value.name?value.name:''}
                 </div>
                 <div>
-                 <b>Apt:</b> ${value.apt}
+                 <b>Apt:</b> ${value.apt?value.apt:'-'}
                 </div>
                 <div>
-                 <b>Street:</b> ${value.street}
+                 <b>Street:</b> ${value.street?value.street:'-'}
                 </div>
                 <div>
-                 <b>City:</b> ${value.city}
+                 <b>City:</b> ${value.city?value.city:'-'}
                 </div>
                 <div>
-                 <b>State:</b> ${value.state}
+                 <b>State:</b> ${value.state?value.state:'-'}
                 </div>
                 <div>
-                 <b>Zip code:</b> ${value.zipCode}
+                 <b>Zip code:</b> ${value.zipCode?value.zipCode:'-'}
                 </div>
             `
             ),

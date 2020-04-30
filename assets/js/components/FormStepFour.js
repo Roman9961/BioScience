@@ -126,12 +126,12 @@ const FormikStepFour = withFormik({
     validationSchema: Yup.object().shape({
         customer:Yup.object().shape({
             shippingInfo: Yup.object().shape({
-                name:Yup.string().required('Required'),
-                street:Yup.string().required('Required'),
-                apt: Yup.string(),
-                city: Yup.string().required('Required'),
-                state: Yup.string().required('Required'),
-                zipCode: Yup.string().required('Required')
+                name:Yup.string().required('Required').nullable(),
+                street:Yup.string().required('Required').nullable(),
+                apt: Yup.string().nullable(),
+                city: Yup.string().required('Required').nullable(),
+                state: Yup.string().required('Required').nullable(),
+                zipCode: Yup.string().required('Required').nullable()
             })
         })
     }),
