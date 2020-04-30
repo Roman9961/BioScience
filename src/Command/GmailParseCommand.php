@@ -23,6 +23,7 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class GmailParseCommand extends Command
 {
@@ -42,11 +43,15 @@ class GmailParseCommand extends Command
      * @var LoggerInterface
      */
     private $logger;
+    /**
+     * @var KernelInterface
+     */
+    private $appKernel;
 
     /**
      * GoogleClient constructor.
      */
-    public function __construct(Google_Client $googleClient, EntityManagerInterface $em, LoggerInterface $logger)
+    public function __construct(Google_Client $googleClient, EntityManagerInterface $em, LoggerInterface $logger, KernelInterface $appKernel)
     {
         $this->googleClient = $googleClient;
         $this->em = $em;
@@ -54,6 +59,7 @@ class GmailParseCommand extends Command
         parent::__construct();
 
         $this->logger = $logger;
+        $this->appKernel = $appKernel;
     }
 
 
@@ -77,7 +83,7 @@ class GmailParseCommand extends Command
         try {
             $this->googleClient->setScopes(Google_Service_Gmail::GMAIL_READONLY);
             $this->googleClient->setAccessType('offline');
-            $tokenPath = '/var/www/moritzlab/moritzlab.promo/token.json';
+            $tokenPath = $this->appKernel->getProjectDir().'/token.json';
             if (file_exists($tokenPath)) {
                 $accessToken = json_decode(file_get_contents($tokenPath), true);
                 $this->googleClient->setAccessToken($accessToken);
@@ -145,6 +151,7 @@ class GmailParseCommand extends Command
 
 
         $nextPage = $messageList->getNextPageToken();
+
         if($nextPage){
 //            $this->setLastPage($nextPage);
         }
@@ -152,6 +159,7 @@ class GmailParseCommand extends Command
         $isParsed = true;
 
         if(count($messageList->getMessages())>0) {
+            $orderInf =[];
             try {
                 foreach ($messageList->getMessages() as $message) {
 
@@ -166,15 +174,21 @@ class GmailParseCommand extends Command
                     $isParsed = $this->isParsedMessage($messageId);
                     $messagePayload =  $userMessages->get($user, $messageId)->getPayload();
                     $rawData = $this->getRawData($messagePayload);
-                    $orderInfo = $this->getOrderInfo($rawData);
-                    $orderInfo['messageId'] = $messageId;
-                    $orderInfo['order_date'] = new \DateTime($orderDate[1]);
 
-                    echo $orderInfo['order_id'].'|||';
+                    $orderInf = $this->getOrderInfo($rawData);
+
+                    if(empty($orderInf['order_id'])){
+                       continue;
+                    }
+
+                    $orderInf['messageId'] = $messageId;
+                    $orderInf['order_date'] = new \DateTime($orderDate[1]);
+
+                    echo $orderInf['order_id'].'|||';
                     echo strval($isParsed).PHP_EOL;
 
                     if(!$isParsed && $rawData) {
-                        $this->addCustomerOrder($orderInfo);
+                        $this->addCustomerOrder($orderInf);
                     }
                 }
                 while ($nextPage && !$isParsed) {
@@ -185,7 +199,7 @@ class GmailParseCommand extends Command
                 $this->em->flush();
 
             }catch (\Exception $e){
-                $this->logger->error('Error', ['error'=> $e->getMessage(), 'order' => $orderInfo]);
+                $this->logger->error('Error', ['error'=> $e->getLine(), 'order' => $orderInf]);
                 $this->stopProcess();
             }
         }
@@ -206,12 +220,16 @@ class GmailParseCommand extends Command
     }
 
     private function getRawData($payload){
-       $rawData = $payload->getParts()[0]->getBody()->getData();
-
-       while (!$rawData){
-           $rawData = $this->getRawData($payload->getParts()[0]);
-       }
-       return $rawData;
+        $rawData = $payload->getBody()->getData();
+        if(!$rawData){
+            foreach ($payload->getParts() as $part){
+                $rawData = $this->getRawData($part);
+                if($rawData){
+                    break;
+                }
+            }
+        }
+        return $rawData;
     }
 
     private function getOrderInfo($body) {
@@ -245,7 +263,7 @@ class GmailParseCommand extends Command
 
     private function isProcessRunning()
     {
-        if (file_exists('/var/www/moritzlab/moritzlab.promo/pid')){
+        if (file_exists($this->appKernel->getProjectDir().'/pid')){
             $this->logger->warning('Process running', []);
             throw new \RuntimeException('Process running');
         }
@@ -254,7 +272,7 @@ class GmailParseCommand extends Command
     private function initProcess()
     {
         try {
-            file_put_contents('/var/www/moritzlab/moritzlab.promo/pid', uniqid());
+            file_put_contents($this->appKernel->getProjectDir().'/pid', uniqid());
         }catch (\Exception $e){
             $this->logger->error('Init process error', ['error'=>$e->getMessage()]);
         }
@@ -263,7 +281,7 @@ class GmailParseCommand extends Command
     private function stopProcess()
     {
         try {
-            unlink('/var/www/moritzlab/moritzlab.promo/pid');
+            unlink($this->appKernel->getProjectDir().'/pid');
         }catch (\Exception $e){
             $this->logger->error('Stop process error', ['error'=>$e->getMessage()]);
         }
@@ -272,11 +290,12 @@ class GmailParseCommand extends Command
     private function createShippingAddress($shippingRawData)
     {
         $city = explode(',',$shippingRawData[2]);
-        preg_match('/(.*\\s?.*)\\s(.*)\\s([A-Z]{2})/ms', $city[1], $res);
+        $shipInfo = count($city)>1 ? $city[1] :$city[0];
+        preg_match('/(.*\\s?.*)\\s(.*)\\s([A-Z]{2})/ms', $shipInfo, $res);
 
         $shippingAddress = new ShippingAddress();
 
-        $shippingAddress->city =  rtrim($city[0]);
+        $shippingAddress->city =  count($city)>1 ? rtrim($city[0]) : $res[1];
         $shippingAddress->state =  $res[1];
         $shippingAddress->zipCode =  $res[2];
         $shippingAddress->country =  $res[3];

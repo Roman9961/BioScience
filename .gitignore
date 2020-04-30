@@ -19,4 +19,5 @@ yarn-error.log
 composer.phar
 ###> symfony/web-server-bundle ###
 .web-server-pid
+credentials.json
 ###< symfony/web-server-bundle ###

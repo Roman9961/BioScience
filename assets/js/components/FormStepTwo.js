@@ -70,7 +70,7 @@ const FormikStepTwo = withFormik({
     },
     // validateOnChange: false,
     validationSchema: Yup.object().shape({
-        feedback: Yup.string().min(10).required(),
+        feedback: Yup.string().min(25).required(),
         grad: Yup.number().required(),
     }),
     handleSubmit(values, actions){

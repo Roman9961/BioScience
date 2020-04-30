@@ -55,7 +55,7 @@ const FormStepOne = ({
             {errors&&(<p className="text-center text-uppercase text-danger m-0">{errors.general}</p>)}
             <p className="text-center m-0"><small>*Required fields</small></p>
             <button type="submit" className="btn btn-success text-uppercase font-weight-bold">Get my free bottle</button>
-            <p className="text-justify mt-2 info text-uppercase">No shipping charges, no hidden fees, no credit card required!</p>
+            <p className="text-center mt-2 info text-uppercase">No shipping charges, no hidden fees, no credit card required!</p>
         </Form>
     </div>
 )
