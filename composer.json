@@ -61,7 +61,8 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@auto-scripts"
+            "@auto-scripts",
+            "php cron.php"
         ],
         "post-update-cmd": [
             "@auto-scripts"
