@@ -45,6 +45,10 @@ header {
     div[class*="-control"]{
         background-color: darken(white, 3%) !important;
     }
+    &.error{
+        box-shadow: 0px 0px 5px 0px $danger;
+        border-radius: 5px;
+    }
 }
 .smaller{
     font-size: 1.47rem;

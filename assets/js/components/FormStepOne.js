@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {withFormik, Form} from "formik";
+import {withFormik, Field, Form} from "formik";
 import axios from 'axios';
 import qs from 'qs';
 import Select from 'react-select';
@@ -13,42 +13,63 @@ const FormStepOne = ({
     handleChange,
     handleSubmit,
     setFieldValue,
+    touched,
     isSubmitting,
-    setFieldTouched,
  }) => (
     <div className="formik-container">
         <Form onSubmit={handleSubmit} className="d-flex flex-column form-step-1">
             <h4 className="text-center smaller">Share your experience with us and receive a free bottle!*</h4>
             <p className="text-center pb-1"><small>The process is quick and easy! To begin, please complete the fields below</small></p>
-            {errors.first_name&&(<small className="text-uppercase text-danger">{errors.first_name}</small>)}
+            {errors.first_name&&touched.first_name&&(<small className="text-uppercase text-danger">{errors.first_name}</small>)}
             <div className="form-group">
-                <input type="text" className="form-control formik-input" placeholder = "First Name*" name="first_name" value={values.first_name} onChange={handleChange}/>
+                <Field
+                    name="first_name"
+                    className={errors.first_name&&touched.first_name&&('form-control formik-input error') || 'form-control formik-input'}
+                    onChange={handleChange}
+                    value={values.first_name}
+                    type="text"
+                    placeholder="First Name*"
+                />
             </div>
-            {errors.last_name&&(<small className="text-uppercase text-danger">{errors.last_name}</small>)}
+            {errors.last_name&&touched.last_name&&(<small className="text-uppercase text-danger">{errors.last_name}</small>)}
             <div className="form-group">
-                <input type="text" className="form-control formik-input" placeholder = "Last Name*" name="last_name" value={values.last_name} onChange={handleChange}/>
+                <Field
+                    name="last_name"
+                    className={errors.last_name&&touched.last_name&&('form-control formik-input error') || 'form-control formik-input'}
+                    onChange={handleChange}
+                    value={values.last_name}
+                    type="text"
+                    placeholder="Last Name*"
+                />
             </div>
-            {errors.email&&(<small className="text-uppercasetext-danger">Email error</small>)}
+            {errors.email&&touched.email&&(<small className="text-uppercase text-danger">{errors.email}</small>)}
             <div className="form-group">
-                <input type="email" className="form-control formik-input" placeholder = "Email Address*" name="email" value={values.email} onChange={handleChange}/>
+                <Field
+                    name="email"
+                    className={errors.email&&touched.email&&('form-control formik-input error') || 'form-control formik-input'}
+                    onChange={handleChange}
+                    value={values.email}
+                    type="text"
+                    placeholder="Email"
+                />
             </div>
+            {errors.product&&touched.product&&(<small className="text-uppercase text-danger">Please select a product</small>)}
             <div className="form-group">
                 <Select
                     id="color"
                     options={products}
-                    placeholder = "Select Product*"
+                    placeholder ="Select Product*"
                     multi={true}
                     onChange={(value) => setFieldValue('product', value)}
-                    onBlur={()=> setFieldTouched('product', true)}
                     value={values.product}
-                    className="formik-input"
+                    className={errors.product&&touched.product&&('formik-input error') || 'formik-input'}
                 />
             </div>
             {values.product&&(
                 <React.Fragment>
-                    {errors.order_id&&(<small className="text-uppercase text-danger">{errors.order_id}</small>)}
+                    {errors.order_id&&touched.order_id&&(<small className="text-uppercase text-danger">{errors.order_id}</small>)}
                 <div className="form-group">
-                    <input type="text" className="form-control formik-input" placeholder = "Order Id*" name="order_id" value={values.order_id} onChange={handleChange}/>
+                    <input type="text" className={errors.order_id&&touched.order_id&&('form-control formik-input error') || 'form-control formik-input'} placeholder ="Order Id*"  name="order_id" value={values.order_id} onChange={handleChange}/>
                 </div>
                 </React.Fragment>
             )}
@@ -73,12 +94,13 @@ const FormikStepOne = withFormik({
     },
     // validateOnChange: false,
     validationSchema: Yup.object().shape({
-        first_name: Yup.string().required(),
-        last_name: Yup.string().required(),
-        email: Yup.string().email().required(),
+        first_name: Yup.string().required('Please povide first name'),
+        last_name: Yup.string().required('Please povide last name'),
+        email: Yup.string().email('Invalid email').required('Please povide email'),
+        product: Yup.string().required(),
         order_id: Yup
             .string()
-        .matches(/^\d{3}-\d{7}-\d{7}$/, 'Format 100-1234567-1234567').required(),
+        .matches(/^\d{3}-\d{7}-\d{7}$/, 'Format 100-1234567-1234567').required('Please povide your order id'),
     }),
     handleSubmit(values, actions){
         console.log(values)

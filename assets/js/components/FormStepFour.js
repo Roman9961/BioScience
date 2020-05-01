@@ -23,6 +23,7 @@ const FormStepFour = ({
     setFieldValue,
     isSubmitting,
     setFieldTouched,
+    touched
  }) => (
     <div className="formik-container">
         <div className="form-progress-bar"><div className="form-progress form-progress-w80"><b>80% Completed</b></div></div>
@@ -32,26 +33,26 @@ const FormStepFour = ({
                 <ErrorMessage
                     component="div"
                     name="customer.shippingInfo.name"
-                    className="text-uppercase text-danger small position-absolute"
+                    className="text-uppercase text-danger small mt-n1 position-absolute"
                 />
                 <Field
                     name="customer.shippingInfo.name"
                     placeholder="Name*"
                     type="text"
-                    className="form-control formik-input mt-3"
+                    className={`form-control formik-input mt-3 ${getIn(errors, "customer.shippingInfo.name")&&getIn(touched, "customer.shippingInfo.name") ? 'error': ''}`}
                 />
             </div>
             <div className="form-group">
                 <ErrorMessage
                     component="div"
                     name="customer.shippingInfo.street"
-                    className="text-uppercase text-danger small position-absolute"
+                    className="text-uppercase text-danger small mt-n1 position-absolute"
                 />
                 <Field
                     name="customer.shippingInfo.street"
                     placeholder="Street Address*"
                     type="text"
-                    className="form-control formik-input mt-3"
+                    className={`form-control formik-input mt-3 ${getIn(errors, "customer.shippingInfo.street")&&getIn(touched, "customer.shippingInfo.street") ? 'error': ''}`}
                 />
             </div>
 
@@ -59,7 +60,7 @@ const FormStepFour = ({
                 <ErrorMessage
                     component="div"
                     name="customer.shippingInfo.apt"
-                    className="text-uppercase text-danger small position-absolute"
+                    className="text-uppercase text-danger small mt-n1 position-absolute"
                 />
                 <Field
                     name="customer.shippingInfo.apt"
@@ -72,39 +73,39 @@ const FormStepFour = ({
                 <ErrorMessage
                     component="div"
                     name="customer.shippingInfo.city"
-                    className="text-uppercase text-danger small position-absolute"
+                    className="text-uppercase text-danger small mt-n1 position-absolute"
                 />
                 <Field
                     name="customer.shippingInfo.city"
                     placeholder="City*"
                     type="text"
-                    className="form-control formik-input mt-3"
+                    className={`form-control formik-input mt-3 ${getIn(errors, "customer.shippingInfo.city")&&getIn(touched, "customer.shippingInfo.city") ? 'error': ''}`}
                 />
             </div>
             <div className="form-group">
                 <ErrorMessage
                     component="div"
                     name="customer.shippingInfo.state"
-                    className="text-uppercase text-danger small position-absolute"
+                    className="text-uppercase text-danger small mt-n1 position-absolute"
                 />
                 <Field
                     name="customer.shippingInfo.state"
                     placeholder="State*"
                     type="text"
-                    className="form-control formik-input mt-3"
+                    className={`form-control formik-input mt-3 ${getIn(errors, "customer.shippingInfo.state")&&getIn(touched, "customer.shippingInfo.state") ? 'error': ''}`}
                 />
             </div>
             <div className="form-group">
                 <ErrorMessage
                     component="div"
                     name="customer.shippingInfo.zipCode"
-                    className="text-uppercase text-danger small position-absolute"
+                    className="text-uppercase text-danger small mt-n1 position-absolute"
                 />
                 <Field
                     name="customer.shippingInfo.zipCode"
                     placeholder="ZipCode*"
                     type="text"
-                    className="form-control formik-input mt-3"
+                    className={`form-control formik-input mt-3 ${getIn(errors, "customer.shippingInfo.zipCode")&&getIn(touched, "customer.shippingInfo.zipCode") ? 'error': ''}`}
                 />
             </div>
             {errors&&(<p style={{ color: 'red' }}>{errors.general}</p>)}

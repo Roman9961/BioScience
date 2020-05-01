@@ -20,7 +20,8 @@ const FormStepTwo = ({
     errors,
     handleChange,
     handleSubmit,
-
+    onBlur,
+    touched
  }) => (
     <div className="formik-container w-100">
      <React.Fragment>
@@ -39,13 +40,13 @@ const FormStepTwo = ({
                     </div>
                     <div>Love It!</div>
                 </div>
-                {errors.grad&&(<small className="text-danger text-center">Select smile</small>)}
+                {errors.grad&&touched.grad&&(<small className="text-danger text-center">Select smile</small>)}
             </div>
 
             <div className="form-group pt-3 d-flex flex-column align-items-center">
                 <h5 className="text-center pt-3"><b>Please share your experrience with the product here:</b></h5>
-                <textarea className="form-control formik-input" name="feedback" value={values.feedback} onChange={handleChange}/>
-                {errors.feedback&&(<small className="text-danger text-center">Too short feedback</small>)}
+                <textarea onBlur={()=>(touched.feedback=true)} className={errors.feedback&&touched.feedback&&('form-control formik-input error') || 'form-control formik-input'} name="feedback" value={values.feedback} onChange={handleChange}/>
+                {errors.feedback&&touched.feedback&&(<small className="text-danger text-center">Too short feedback</small>)}
             </div>
             
 
