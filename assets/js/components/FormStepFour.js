@@ -28,7 +28,7 @@ const FormStepFour = ({
     <div className="formik-container">
         <div className="form-progress-bar"><div className="form-progress form-progress-w80"><b>80% Completed</b></div></div>
         <Form onSubmit={handleSubmit} className="d-flex flex-column form-step-1">
-            <h4 className="text-center">Please provide the shipping address to where you would like your bottle sent.</h4>
+            <h4 className="text-center">Please provide the shipping address to where you would like your free bottle sent.</h4>
             <div className="form-group">
                 <ErrorMessage
                     component="div"

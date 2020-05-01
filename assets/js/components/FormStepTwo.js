@@ -44,14 +44,14 @@ const FormStepTwo = ({
             </div>
 
             <div className="form-group pt-3 d-flex flex-column align-items-center">
-                <h5 className="text-center pt-3"><b>Please share your experrience with the product here:</b></h5>
+                <h5 className="text-center pt-3"><b>Please share your experience with the product here:</b></h5>
                 <textarea onBlur={()=>(touched.feedback=true)} className={errors.feedback&&touched.feedback&&('form-control formik-input error') || 'form-control formik-input'} name="feedback" value={values.feedback} onChange={handleChange}/>
-                {errors.feedback&&touched.feedback&&(<small className="text-danger text-center">Too short feedback</small>)}
+                {errors.feedback&&touched.feedback&&(<small className="text-danger text-center">Minimum 25 characters</small>)}
             </div>
             
 
             <div className="d-flex justify-content-center">
-                <button type="submit" className="btn btn-success text-uppercase font-weight-bold w-50">Submit my experience</button>
+                <button type="submit" className="btn btn-success text-uppercase font-weight-bold">Submit</button>
             </div>
 
             {errors&&(<p style={{ color: 'red' }}>{errors.general}</p>)}

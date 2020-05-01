@@ -40,7 +40,7 @@ const FormStepThree = ({
                     <div className="d-flex flex-column align-items-center">
                         <div><small><b>Step 2 - PASTE ON AMAZON:</b></small></div>
                         <div className="form-control review"><div className="amazon-logo"></div></div>
-                        <a href="https://www.amazon.com/" target="_blank" className="btn btn-success text-uppercase font-weight-bold mt-2" onClick={()=>{handleAmazonFeedback(true)}}><small><b>Click here</b></small></a>
+                        <a href="https://www.amazon.com/review/create-review" target="_blank" className="btn btn-success text-uppercase font-weight-bold mt-2" onClick={()=>{handleAmazonFeedback(true)}}><small><b>Click here</b></small></a>
                     </div>
                  </div>
              <div className="text-center py-3"><small><b>After submitting your review, please click the button below to confirm your shipping address and to complete your request.</b></small></div>
