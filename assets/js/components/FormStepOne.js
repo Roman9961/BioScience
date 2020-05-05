@@ -60,6 +60,7 @@ const FormStepOne = ({
                     options={products}
                     placeholder ="Select Product*"
                     multi={true}
+                    isSearchable={false}
                     onChange={(value) => setFieldValue('product', value)}
                     value={values.product}
                     className={errors.product&&touched.product&&('formik-input error') || 'formik-input'}
